@@ -3,59 +3,337 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo de Productos - Tienda Escolar</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Tienda Escolar - Productos Escolares</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mercadolibre.css">
 </head>
 <body>
-  <header>
-    <h1> Mi Tienda Escolar</h1>
-    <p>Productos hechos con orgullo por estudiantes</p>
+  <!-- Header estilo Mercado Libre -->
+  <header class="ml-header">
+    <div class="header-top">
+      <div class="container">
+        <div class="header-logo">
+          <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>TiendaEscolar</span>
+          </div>
+        </div>
+        <div class="header-search">
+          <form id="search-form">
+            <input type="text" id="search-input" placeholder="Buscar productos, marcas y más...">
+            <button type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+        <div class="header-actions">
+          <div class="user-menu">
+            <i class="fas fa-user"></i>
+            <span>Mi cuenta</span>
+          </div>
+          <div class="cart-icon" id="cart-toggle">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <div class="container">
+        <ul class="nav-categories">
+          <li><a href="#" data-category="todos">Todos los productos</a></li>
+          <li><a href="#" data-category="material">Material Escolar</a></li>
+          <li><a href="#" data-category="ropa">Ropa</a></li>
+          <li><a href="#" data-category="accesorios">Accesorios</a></li>
+          <li><a href="#" data-category="tecnologia">Tecnología</a></li>
+        </ul>
+      </div>
+    </nav>
   </header>
 
-  <section class="catalogo">
-    <h2>Catálogo de Productos</h2>
-    <div class="productos">
-
-      <article class="producto">
-        <img src="taza.png" alt="Taza personalizada con logo escolar">
-        <h3>Taza personalizada</h3>
-        <p>Taza de cerámica blanca con el logo de la escuela impreso a color.</p>
-        <span class="precio">$120.00</span>
-        <button onclick="mostrarMensaje('Taza personalizada')">Comprar</button>
-      </article>
-
-      <article class="producto">
-        <img src="playera.jpg" alt="Playera blanca con estampado escolar">
-        <h3>Playera estampada</h3>
-        <p>Playera de algodón suave con diseño único hecho por alumnos.</p>
-        <span class="precio">$180.00</span>
-        <button onclick="mostrarMensaje('Playera estampada')">Comprar</button>
-      </article>
-
-      <article class="producto">
-        <img src="libreta.jpg" alt="Libreta decorada con motivos escolares">
-        <h3>Libreta decorada</h3>
-        <p>Libreta profesional y con portada personalizada y 100 hojas blancas.</p>
-        <span class="precio">$85.00</span>
-        <button onclick="mostrarMensaje('Libreta decorada')">Comprar</button>
-      </article>
-
-      <article class="producto">
-        <img src="mochila.jpg" alt="Mochila con logo de la escuela">
-        <h3>Mochila escolar</h3>
-        <p>Mochila resistente y moderna con el emblema de la institución.</p>
-        <span class="precio">$350.00</span>
-        <button onclick="mostrarMensaje('Mochila escolar')">Comprar</button>
-      </article>
-
+  <!-- Banner promocional -->
+  <section class="banner">
+    <div class="container">
+      <div class="banner-content">
+        <h1>¡Vuelta a Clases 2025!</h1>
+        <p>Todo lo que necesitas para el nuevo año escolar</p>
+        <button class="btn btn-primary">Ver Ofertas</button>
+      </div>
     </div>
   </section>
 
-  <footer>
-    <p>📧 Contacto: <a href="mailto:tiendaescolar@email.com">tiendaescolar@email.com</a></p>
-    <p>© 2025 Mi Tienda Escolar - Todos los derechos reservados</p>
+  <!-- Contenido principal -->
+  <main class="container main-content">
+    <!-- Filtros y ordenamiento -->
+    <div class="filters-section">
+      <div class="filters-left">
+        <span class="results-count" id="results-count">Cargando productos...</span>
+      </div>
+      <div class="filters-right">
+        <select id="sort-select" class="sort-select">
+          <option value="nombre">Ordenar por nombre</option>
+          <option value="precio_asc">Menor precio</option>
+          <option value="precio_desc">Mayor precio</option>
+          <option value="relevancia">Más relevantes</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Productos -->
+    <section class="products-grid" id="products-container">
+      <!-- Los productos se cargan dinámicamente aquí -->
+      <div class="loading-products">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Cargando productos...</p>
+      </div>
+    </section>
+
+    <!-- Paginación -->
+    <div class="pagination" id="pagination" style="display: none;">
+      <button class="pagination-btn" id="prev-page">
+        <i class="fas fa-chevron-left"></i> Anterior
+      </button>
+      <div class="page-numbers" id="page-numbers"></div>
+      <button class="pagination-btn" id="next-page">
+        Siguiente <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </main>
+
+  <!-- Carrito lateral (estilo Mercado Libre) -->
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h3>Tu carrito de compras</h3>
+      <button class="close-cart" id="close-cart">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="cart-content" id="cart-content">
+      <div class="empty-cart" id="empty-cart">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Tu carrito está vacío</p>
+        <button class="btn btn-outline" id="continue-shopping">Seguir comprando</button>
+      </div>
+      <div class="cart-items" id="cart-items" style="display: none;"></div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display: none;">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span class="total-amount">$0.00</span>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkout-btn">Finalizar compra</button>
+    </div>
+  </div>
+
+  <!-- Modal de checkout -->
+  <div class="modal" id="checkout-modal">
+    <div class="modal-content checkout-modal">
+      <div class="modal-header">
+        <h3>Finalizar Compra</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="checkout-steps">
+        <div class="step active" data-step="1">
+          <span>1</span>
+          <p>Datos de envío</p>
+        </div>
+        <div class="step" data-step="2">
+          <span>2</span>
+          <p>Método de pago</p>
+        </div>
+        <div class="step" data-step="3">
+          <span>3</span>
+          <p>Confirmación</p>
+        </div>
+      </div>
+      
+      <form id="checkout-form">
+        <!-- Paso 1: Datos de envío -->
+        <div class="checkout-step active" id="step-1">
+          <h4>Información de envío</h4>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="direccion">Dirección</label>
+              <input type="text" id="direccion" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="ciudad">Ciudad</label>
+              <input type="text" id="ciudad" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="cp">Código Postal</label>
+              <input type="text" id="cp" class="form-control" required>
+            </div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="btn btn-next" data-next="2">Continuar</button>
+          </div>
+        </div>
+
+        <!-- Paso 2: Método de pago -->
+        <div class="checkout-step" id="step-2">
+          <h4>Selecciona método de pago</h4>
+          <div class="payment-methods">
+            <div class="payment-method">
+              <input type="radio" id="tarjeta" name="payment" value="tarjeta" checked>
+              <label for="tarjeta">
+                <i class="fas fa-credit-card"></i>
+                Tarjeta de crédito/débito
+              </label>
+            </div>
+            <div class="payment-method">
+              <input type="radio" id="paypal" name="payment" value="paypal">
+              <label for="paypal">
+                <i class="fab fa-paypal"></i>
+                PayPal
+              </label>
+            </div>
+            <div class="payment-method">
+              <input type="radio" id="transferencia" name="payment" value="transferencia">
+              <label for="transferencia">
+                <i class="fas fa-university"></i>
+                Transferencia bancaria
+              </label>
+            </div>
+          </div>
+
+          <!-- Datos de tarjeta -->
+          <div class="card-data" id="card-data">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="card-number">Número de tarjeta</label>
+                <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+              </div>
+              <div class="form-group">
+                <label for="card-name">Nombre en la tarjeta</label>
+                <input type="text" id="card-name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="card-expiry">Fecha de expiración</label>
+                <input type="text" id="card-expiry" class="form-control" placeholder="MM/AA">
+              </div>
+              <div class="form-group">
+                <label for="card-cvv">CVV</label>
+                <input type="text" id="card-cvv" class="form-control" placeholder="123">
+              </div>
+            </div>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn btn-outline" data-prev="1">Atrás</button>
+            <button type="button" class="btn btn-next" data-next="3">Continuar</button>
+          </div>
+        </div>
+
+        <!-- Paso 3: Confirmación -->
+        <div class="checkout-step" id="step-3">
+          <h4>Resumen de tu compra</h4>
+          <div class="order-summary">
+            <div class="order-items" id="order-items"></div>
+            <div class="order-total">
+              <div class="total-line">
+                <span>Subtotal:</span>
+                <span id="order-subtotal">$0.00</span>
+              </div>
+              <div class="total-line">
+                <span>Envío:</span>
+                <span id="order-shipping">$0.00</span>
+              </div>
+              <div class="total-line grand-total">
+                <span>Total:</span>
+                <span id="order-total">$0.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="step-actions">
+            <button type="button" class="btn btn-outline" data-prev="2">Atrás</button>
+            <button type="submit" class="btn btn-primary">Confirmar Compra</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de ticket -->
+  <div class="modal" id="ticket-modal">
+    <div class="modal-content ticket-modal">
+      <div class="modal-header">
+        <h3>¡Compra Exitosa!</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <div class="ticket-content">
+        <div class="ticket" id="ticket">
+          <div class="ticket-header">
+            <h3>TiendaEscolar</h3>
+            <p>Ticket de Compra</p>
+            <p id="ticket-date"></p>
+          </div>
+          <div class="ticket-items" id="ticket-items"></div>
+          <div class="ticket-total">
+            <div class="total-line">
+              <span>Total:</span>
+              <span id="ticket-total">$0.00</span>
+            </div>
+          </div>
+          <div class="ticket-footer">
+            <p>¡Gracias por tu compra!</p>
+            <p>ID de transacción: <span id="transaction-id"></span></p>
+          </div>
+        </div>
+        <div class="ticket-actions">
+          <button class="btn btn-outline" id="print-ticket">
+            <i class="fas fa-print"></i> Imprimir
+          </button>
+          <button class="btn btn-primary" id="new-order">
+            <i class="fas fa-shopping-cart"></i> Nueva Compra
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>TiendaEscolar</h4>
+          <p>Todo lo que necesitas para el año escolar</p>
+        </div>
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <p>📧 contacto@tiendaescolar.com</p>
+          <p>📞 +1 234 567 8900</p>
+        </div>
+        <div class="footer-section">
+          <h4>Enlaces rápidos</h4>
+          <ul>
+            <li><a href="#">Sobre nosotros</a></li>
+            <li><a href="#">Términos y condiciones</a></li>
+            <li><a href="#">Política de privacidad</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 TiendaEscolar. Todos los derechos reservados.</p>
+      </div>
+    </div>
   </footer>
 
-  <script src="scripts.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/busqueda.js"></script>
 </body>
 </html>
