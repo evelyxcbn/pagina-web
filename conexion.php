@@ -2,12 +2,12 @@
 // Configuración de la base de datos
 $host = 'localhost';
 $dbname = 'tienda_escolar';
-$username = 'tu_usuario';
-$password = 'tu_contraseña';
+$username = 'root';
+$password = 'Honimore188';
 
 try {
     // Crear conexión PDO
-    $pdo = new PDO("pgsql:host=$host;dbname=$tienda_escolar", $username, $password);
+    $pdo = new PDO("pgsql:host=$host;dbname=$tienda_escolar", $username=, $password);
     
     // Configurar PDO para que muestre errores
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
