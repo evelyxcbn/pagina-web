@@ -4,7 +4,7 @@ let products = [];
 
 // Inicialización cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
-  // Cargar productos desde la base de datos
+  // Cargar productos
   loadProducts();
   
   // Cargar carrito desde localStorage
@@ -14,56 +14,67 @@ document.addEventListener('DOMContentLoaded', function() {
   setupEventListeners();
 });
 
-// Cargar productos desde la base de datos
+// Cargar productos
 function loadProducts() {
-  // En un entorno real, esto haría una petición AJAX a un archivo PHP
-  // Por ahora, simulamos datos
   products = [
     {
       id: 1,
       name: "Taza Personalizada",
-      description: "Taza de cerámica con logo escolar de alta calidad.",
+      description: "Taza de cerámica con logo escolar de alta calidad. Diseño exclusivo hecho por estudiantes.",
       price: 120.00,
       image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
     },
     {
       id: 2,
       name: "Playera Estampada",
-      description: "Playera de algodón 100% con diseño escolar exclusivo.",
+      description: "Playera de algodón 100% con diseño escolar exclusivo. Varios colores disponibles.",
       price: 180.00,
       image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
     },
     {
       id: 3,
       name: "Mochila Escolar",
-      description: "Mochila resistente con compartimentos múltiples.",
+      description: "Mochila resistente con compartimentos múltiples. Ideal para estudiantes activos.",
       price: 350.00,
       image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
     },
     {
       id: 4,
       name: "Lapicera Personalizada",
-      description: "Set de lapiceras con el nombre de la escuela.",
+      description: "Set de lapiceras con el nombre de la escuela. Incluye 5 colores diferentes.",
       price: 75.00,
       image: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
     },
     {
       id: 5,
       name: "Cuaderno Decorado",
-      description: "Cuaderno de 100 hojas con diseño estudiantil.",
+      description: "Cuaderno de 100 hojas con diseño estudiantil. Portada resistente y diseño único.",
       price: 60.00,
       image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
     },
     {
       id: 6,
       name: "Gorra Escolar",
-      description: "Gorra ajustable con el emblema de la escuela.",
+      description: "Gorra ajustable con el emblema de la escuela. Perfecta para días soleados.",
       price: 150.00,
       image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80"
+    },
+    {
+      id: 7,
+      name: "Stickers Decorativos",
+      description: "Pack de 50 stickers con diseños escolares. Ideales para personalizar tus cosas.",
+      price: 45.00,
+      image: "https://images.unsplash.com/photo-1605723517506-8d6e14a0d19b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+    },
+    {
+      id: 8,
+      name: "Llavero Escolar",
+      description: "Llavero metálico con el logo de la escuela. Duradero y elegante.",
+      price: 35.00,
+      image: "https://images.unsplash.com/photo-1589674781759-c21c37960bb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
     }
   ];
   
-  // Renderizar productos en la página
   renderProducts();
 }
 
@@ -83,14 +94,16 @@ function renderProducts() {
       <div class="product-info">
         <h3>${product.name}</h3>
         <p class="product-description">${product.description}</p>
-        <p class="product-price">$${product.price.toFixed(2)}</p>
+        <p class="product-price">${product.price.toFixed(2)}</p>
         <div class="product-actions">
           <div class="quantity-control">
             <button class="quantity-btn minus" data-id="${product.id}">-</button>
             <input type="number" class="quantity-input" data-id="${product.id}" value="1" min="1">
             <button class="quantity-btn plus" data-id="${product.id}">+</button>
           </div>
-          <button class="btn-primary add-to-cart" data-id="${product.id}">Agregar</button>
+          <button class="btn-primary add-to-cart" data-id="${product.id}">
+            <i class="fas fa-cart-plus"></i> Agregar
+          </button>
         </div>
       </div>
     `;
@@ -217,7 +230,7 @@ function updateCartUI() {
   cartItems.innerHTML = '';
   
   if (cart.length === 0) {
-    cartItems.innerHTML = '<p>Tu carrito está vacío</p>';
+    cartItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
     document.getElementById('checkout-btn').disabled = true;
   } else {
     document.getElementById('checkout-btn').disabled = false;
@@ -238,9 +251,11 @@ function updateCartUI() {
         </div>
         <div class="cart-item-controls">
           <button class="quantity-btn minus-cart" data-id="${item.id}">-</button>
-          <span>${item.quantity}</span>
+          <span class="cart-quantity">${item.quantity}</span>
           <button class="quantity-btn plus-cart" data-id="${item.id}">+</button>
-          <button class="btn-secondary remove-item" data-id="${item.id}">Eliminar</button>
+          <button class="btn-secondary remove-item" data-id="${item.id}">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
       `;
       
@@ -411,13 +426,25 @@ function updateOrderSummary() {
   });
   
   // Total
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const tax = subtotal * 0.16;
+  const total = subtotal + tax;
   
   summaryHTML += '</div>';
   summaryHTML += `
-    <div class="ticket-total">
-      <span>Total:</span>
-      <span>$${total.toFixed(2)}</span>
+    <div class="ticket-totals">
+      <div class="ticket-row">
+        <span>Subtotal:</span>
+        <span>$${subtotal.toFixed(2)}</span>
+      </div>
+      <div class="ticket-row">
+        <span>IVA (16%):</span>
+        <span>$${tax.toFixed(2)}</span>
+      </div>
+      <div class="ticket-row total">
+        <span>Total:</span>
+        <span>$${total.toFixed(2)}</span>
+      </div>
     </div>
   `;
   
@@ -427,6 +454,12 @@ function updateOrderSummary() {
 
 // Confirmar compra
 function confirmPurchase() {
+  // Validar formularios
+  if (!validateForms()) {
+    showNotification('Por favor completa todos los campos correctamente');
+    return;
+  }
+
   // En un entorno real, aquí se enviarían los datos al servidor
   // Por ahora, simulamos el proceso
   
@@ -445,79 +478,332 @@ function confirmPurchase() {
   closeModal();
 }
 
-// Mostrar ticket
+// Validar formularios
+function validateForms() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const address = document.getElementById('address').value;
+  const cardName = document.getElementById('card-name').value;
+  const cardNumber = document.getElementById('card-number').value;
+  const expiryDate = document.getElementById('expiry-date').value;
+  const cvv = document.getElementById('cvv').value;
+
+  if (!name || !email || !phone || !address || !cardName || !cardNumber || !expiryDate || !cvv) {
+    return false;
+  }
+
+  // Validación básica de email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return false;
+  }
+
+  return true;
+}
+
+// Mostrar ticket con diseño mejorado
 function showTicket(orderNumber) {
   const ticketContent = document.getElementById('ticket-content');
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString('es-MX', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  const formattedTime = currentDate.toLocaleTimeString('es-MX', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
   let ticketHTML = `
-    <div class="ticket-header">
-      <h3>Tienda Escolar</h3>
-      <p>Productos estudiantiles</p>
-      <p>Nº de pedido: ${orderNumber}</p>
-      <p>Fecha: ${new Date().toLocaleDateString()}</p>
-    </div>
-    <div class="ticket-items">
+    <div class="ticket-container">
+      <div class="ticket-header">
+        <div class="ticket-logo">
+          <i class="fas fa-graduation-cap"></i>
+          <h3>Tienda Escolar</h3>
+        </div>
+        <p>Productos estudiantiles de calidad</p>
+        <div class="ticket-divider"></div>
+      </div>
+      
+      <div class="ticket-info">
+        <div class="ticket-row">
+          <span class="label">Nº de pedido:</span>
+          <span class="value">${orderNumber}</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Fecha:</span>
+          <span class="value">${formattedDate}</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Hora:</span>
+          <span class="value">${formattedTime}</span>
+        </div>
+      </div>
+
+      <div class="ticket-divider"></div>
+      
+      <div class="ticket-items">
+        <div class="ticket-section-title">PRODUCTOS</div>
   `;
   
   cart.forEach(item => {
+    const subtotal = (item.price * item.quantity).toFixed(2);
     ticketHTML += `
       <div class="ticket-item">
-        <span>${item.name} x${item.quantity}</span>
-        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+        <div class="item-main">
+          <span class="item-name">${item.name}</span>
+          <span class="item-subtotal">$${subtotal}</span>
+        </div>
+        <div class="item-details">
+          <span class="item-quantity">${item.quantity} x $${item.price.toFixed(2)}</span>
+        </div>
       </div>
     `;
   });
   
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const tax = subtotal * 0.16; // IVA 16%
+  const total = subtotal + tax;
   
   ticketHTML += `
-    </div>
-    <div class="ticket-total">
-      <span>Total:</span>
-      <span>$${total.toFixed(2)}</span>
-    </div>
-    <div class="ticket-footer">
-      <p>¡Gracias por tu compra!</p>
-      <p>Contacto: tiendaescolar@email.com</p>
+      </div>
+      
+      <div class="ticket-divider"></div>
+      
+      <div class="ticket-totals">
+        <div class="ticket-row">
+          <span class="label">Subtotal:</span>
+          <span class="value">$${subtotal.toFixed(2)}</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">IVA (16%):</span>
+          <span class="value">$${tax.toFixed(2)}</span>
+        </div>
+        <div class="ticket-row total">
+          <span class="label">TOTAL:</span>
+          <span class="value">$${total.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div class="ticket-divider"></div>
+      
+      <div class="ticket-payment">
+        <div class="ticket-section-title">INFORMACIÓN DE PAGO</div>
+        <div class="ticket-row">
+          <span class="label">Método:</span>
+          <span class="value">Tarjeta de crédito</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Estado:</span>
+          <span class="value status-paid">PAGADO</span>
+        </div>
+      </div>
+
+      <div class="ticket-divider"></div>
+      
+      <div class="ticket-customer">
+        <div class="ticket-section-title">DATOS DEL CLIENTE</div>
+        <div class="ticket-row">
+          <span class="label">Nombre:</span>
+          <span class="value">${document.getElementById('name').value}</span>
+        </div>
+        <div class="ticket-row">
+          <span class="label">Email:</span>
+          <span class="value">${document.getElementById('email').value}</span>
+        </div>
+      </div>
+
+      <div class="ticket-divider"></div>
+      
+      <div class="ticket-footer">
+        <div class="thank-you">
+          <i class="fas fa-heart"></i>
+          <p>¡Gracias por tu compra!</p>
+        </div>
+        <p class="contact-info">
+          <i class="fas fa-phone"></i> (55) 1234-5678<br>
+          <i class="fas fa-envelope"></i> tiendaescolar@email.com
+        </p>
+        <p class="return-policy">
+          * Productos con garantía de 30 días
+        </p>
+        <div class="barcode">
+          <div class="barcode-lines"></div>
+          <p>${orderNumber}</p>
+        </div>
+      </div>
     </div>
   `;
   
   ticketContent.innerHTML = ticketHTML;
   
+  // Generar código de barras visual
+  generateVisualBarcode(orderNumber);
+  
   // Mostrar modal del ticket
   document.getElementById('ticket-modal').style.display = 'block';
 }
 
-// Imprimir ticket
+// Generar código de barras visual (simulado)
+function generateVisualBarcode(orderNumber) {
+  const barcodeContainer = document.querySelector('.barcode-lines');
+  if (!barcodeContainer) return;
+  
+  let barcodeHTML = '';
+  // Crear un patrón visual simple para el código de barras
+  for (let i = 0; i < 20; i++) {
+    const height = 20 + Math.floor(Math.random() * 30);
+    const width = 2 + Math.floor(Math.random() * 3);
+    barcodeHTML += `<div class="barcode-line" style="height: ${height}px; width: ${width}px;"></div>`;
+  }
+  
+  barcodeContainer.innerHTML = barcodeHTML;
+}
+
+// Imprimir ticket con estilo específico
 function printTicket() {
-  const ticketContent = document.getElementById('ticket-content').innerHTML;
-  const printWindow = window.open('', '_blank');
+  const ticketContent = document.querySelector('.ticket-container').cloneNode(true);
+  
+  // Crear ventana de impresión
+  const printWindow = window.open('', '_blank', 'width=400,height=600');
   
   printWindow.document.write(`
+    <!DOCTYPE html>
     <html>
       <head>
         <title>Ticket de Compra - Tienda Escolar</title>
         <style>
-          body { font-family: 'Courier New', monospace; padding: 20px; }
-          .ticket-header { text-align: center; margin-bottom: 15px; border-bottom: 1px dashed #000; padding-bottom: 10px; }
-          .ticket-items { margin-bottom: 15px; }
-          .ticket-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
-          .ticket-total { border-top: 1px dashed #000; padding-top: 10px; font-weight: bold; display: flex; justify-content: space-between; }
-          .ticket-footer { text-align: center; margin-top: 15px; font-size: 0.9em; }
+          body { 
+            font-family: 'Courier New', monospace; 
+            margin: 0;
+            padding: 15px;
+            background: white;
+            color: black;
+            font-size: 12px;
+            line-height: 1.3;
+          }
+          .ticket-container {
+            max-width: 300px;
+            margin: 0 auto;
+          }
+          .ticket-header {
+            text-align: center;
+            margin-bottom: 10px;
+          }
+          .ticket-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 5px;
+          }
+          .ticket-logo i {
+            font-size: 20px;
+          }
+          .ticket-logo h3 {
+            margin: 0;
+            font-size: 16px;
+          }
+          .ticket-divider {
+            border-top: 1px dashed #000;
+            margin: 10px 0;
+          }
+          .ticket-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+          }
+          .ticket-row.total {
+            font-weight: bold;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            margin-top: 5px;
+          }
+          .ticket-section-title {
+            font-weight: bold;
+            text-align: center;
+            margin: 8px 0;
+            font-size: 11px;
+          }
+          .ticket-item {
+            margin-bottom: 6px;
+          }
+          .item-main {
+            display: flex;
+            justify-content: space-between;
+          }
+          .item-details {
+            font-size: 10px;
+            color: #666;
+          }
+          .status-paid {
+            color: green;
+            font-weight: bold;
+          }
+          .thank-you {
+            text-align: center;
+            margin: 10px 0;
+          }
+          .contact-info {
+            text-align: center;
+            font-size: 10px;
+            margin: 8px 0;
+          }
+          .return-policy {
+            text-align: center;
+            font-size: 9px;
+            color: #666;
+            margin: 5px 0;
+          }
+          .barcode {
+            text-align: center;
+            margin-top: 15px;
+          }
+          .barcode-lines {
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            margin-bottom: 5px;
+          }
+          .barcode-line {
+            background: black;
+          }
+          @media print {
+            body { margin: 0; padding: 10px; }
+            .ticket-container { max-width: 100%; }
+          }
         </style>
       </head>
       <body>
-        ${ticketContent}
+        ${ticketContent.outerHTML}
+        <script>
+          window.onload = function() {
+            window.print();
+            setTimeout(function() {
+              window.close();
+            }, 1000);
+          };
+        </script>
       </body>
     </html>
   `);
   
   printWindow.document.close();
-  printWindow.print();
 }
 
-// Iniciar nueva orden
+// Iniciar nueva orden después de imprimir el ticket
 function startNewOrder() {
   closeModal();
+  
+  // Limpiar formularios
+  document.getElementById('personal-info-form').reset();
+  document.getElementById('payment-form').reset();
+  
+  // Restablecer pasos del checkout
+  goToStep(1);
+  
   showNotification('¡Listo para una nueva compra!');
 }
 

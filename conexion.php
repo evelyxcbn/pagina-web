@@ -7,7 +7,7 @@ $password = 'tu_contraseña';
 
 try {
     // Crear conexión PDO
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $username, $password);
+    $pdo = new PDO("pgsql:host=$host;dbname=$tienda_escolar", $username, $password);
     
     // Configurar PDO para que muestre errores
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
