@@ -64,14 +64,14 @@ function loadProducts() {
       name: "Stickers Decorativos",
       description: "Pack de 50 stickers con diseños escolares. Ideales para personalizar tus cosas.",
       price: 45.00,
-      image: "https://images.unsplash.com/photo-1605723517506-8d6e14a0d19b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+      image: "https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
     },
     {
       id: 8,
       name: "Llavero Escolar",
       description: "Llavero metálico con el logo de la escuela. Duradero y elegante.",
       price: 35.00,
-      image: "https://images.unsplash.com/photo-1589674781759-c21c37960bb3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+      image: "https://images.unsplash.com/photo-1608344805836-bc1c979fde9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
     }
   ];
   
@@ -89,7 +89,7 @@ function renderProducts() {
     
     productCard.innerHTML = `
       <div class="product-image">
-        <img src="${product.image}" alt="${product.name}">
+        <img src="${product.image}" alt="${product.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOWZhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0jOTk5IHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIwLjM1ZW0iPiR7cHJvZHVjdC5uYW1lfTwvdGV4dD48L3N2Zz4='">
       </div>
       <div class="product-info">
         <h3>${product.name}</h3>
@@ -242,7 +242,7 @@ function updateCartUI() {
       cartItem.innerHTML = `
         <div class="cart-item-info">
           <div class="cart-item-image">
-            <img src="${item.image}" alt="${item.name}">
+            <img src="${item.image}" alt="${item.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9Izk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9IjAuM2VtIj4ke2l0ZW0ubmFtZX08L3RleHQ+PC9zdmc+='">
           </div>
           <div class="cart-item-details">
             <h4>${item.name}</h4>

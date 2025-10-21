@@ -2,7 +2,7 @@
 // Configuración de la base de datos
 $host = 'localhost';
 $dbname = 'tienda_escolar';
-$username = 'root';
+$username = 'postgres';
 $password = 'Honimore188';
 
 try {
