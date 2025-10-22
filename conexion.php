@@ -3,7 +3,7 @@
 $host = 'localhost';
 $dbname = 'tienda_escolar';
 $username = 'postgres';
-$password = 'Honimore188';
+$password = 'Hobimore188';
 
 try {
     // Crear conexión PDO
