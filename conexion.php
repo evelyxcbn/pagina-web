@@ -1,13 +1,14 @@
 <?php
-// Configuración de la base de datos
+
 $host = 'localhost';
-$dbname = 'tienda_escolar';
-$username = 'postgres';
-$password = 'Hobimore188';
+$dbname = 'tienda_escolar_distribuida';
+$username = 'tu_usuario';
+$password = 'tu_contraseña';
+$port = '5432';
 
 try {
     // Crear conexión PDO
-    $pdo = new PDO("pgsql:host=$host;dbname=$tienda_escolar", $username=, $password);
+    $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $username, $password);
     
     // Configurar PDO para que muestre errores
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
