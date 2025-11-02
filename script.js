@@ -821,3 +821,231 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+// =============================================
+// SISTEMA DE ADMINISTRADOR
+// =============================================
+
+// Credenciales del administrador (en producción esto debería estar en el servidor)
+const ADMIN_CREDENTIALS = {
+    username: "admin",
+    password: "admin123" // En producción usar hash
+};
+
+// Estado de la sesión de administrador
+let adminLoggedIn = false;
+let currentAdmin = null;
+
+// Configurar event listeners para administrador
+function setupAdminEventListeners() {
+    // Botón de administrador en el header
+    document.getElementById('admin-btn').addEventListener('click', openAdminLogin);
+    
+    // Formulario de login de administrador
+    document.getElementById('admin-login-form').addEventListener('submit', handleAdminLogin);
+    
+    // Botón de cerrar sesión
+    document.getElementById('admin-logout').addEventListener('click', handleAdminLogout);
+    
+    // Botones de búsqueda en el panel de administración
+    document.getElementById('admin-search-btn').addEventListener('click', searchAdminProducts);
+    document.getElementById('admin-refresh').addEventListener('click', loadAdminData);
+    
+    // Búsqueda al presionar Enter
+    document.getElementById('admin-search').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            searchAdminProducts();
+        }
+    });
+}
+
+// Abrir modal de login de administrador
+function openAdminLogin() {
+    document.getElementById('admin-login-modal').style.display = 'block';
+}
+
+// Manejar login de administrador
+function handleAdminLogin(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById('admin-username').value;
+    const password = document.getElementById('admin-password').value;
+    const errorDiv = document.getElementById('admin-login-error');
+    
+    // Validar credenciales
+    if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+        adminLoggedIn = true;
+        currentAdmin = username;
+        
+        // Cerrar modal de login
+        closeModal();
+        
+        // Abrir panel de administración
+        openAdminPanel();
+        
+        // Cargar datos de administración
+        loadAdminData();
+        
+        showNotification('✅ Sesión de administrador iniciada');
+    } else {
+        errorDiv.textContent = '❌ Credenciales incorrectas';
+        errorDiv.style.display = 'block';
+    }
+}
+
+// Abrir panel de administración
+function openAdminPanel() {
+    document.getElementById('admin-panel-modal').style.display = 'block';
+    document.getElementById('admin-welcome').textContent = `Bienvenido, ${currentAdmin}`;
+}
+
+// Cerrar sesión de administrador
+function handleAdminLogout() {
+    adminLoggedIn = false;
+    currentAdmin = null;
+    closeModal();
+    showNotification('🔒 Sesión de administrador cerrada');
+}
+
+// Cargar datos para el panel de administración
+function loadAdminData() {
+    // Simular datos de la base de datos distribuida
+    const mockInventoryData = [
+        { id: 1, nombre: "Taza Personalizada", descripcion: "Taza de cerámica con logo", precio: 120.00, stock: 45, sucursal: "norte", categoria: "Accesorios", estado: "DISPONIBLE" },
+        { id: 2, nombre: "Playera Estampada", descripcion: "Playera de algodón 100%", precio: 180.00, stock: 32, sucursal: "norte", categoria: "Ropa", estado: "DISPONIBLE" },
+        { id: 3, nombre: "Mochila Escolar", descripcion: "Mochila resistente", precio: 350.00, stock: 0, sucursal: "sur", categoria: "Accesorios", estado: "AGOTADO" },
+        { id: 4, nombre: "Lapicera Personalizada", descripcion: "Set de lapiceras", precio: 75.00, stock: 2, sucursal: "sur", categoria: "Papelería", estado: "BAJO STOCK" },
+        { id: 5, nombre: "Cuaderno Decorado", descripcion: "Cuaderno de 100 hojas", precio: 60.00, stock: 78, sucursal: "este", categoria: "Papelería", estado: "DISPONIBLE" },
+        { id: 6, nombre: "Gorra Escolar", descripcion: "Gorra ajustable", precio: 150.00, stock: 15, sucursal: "este", categoria: "Ropa", estado: "DISPONIBLE" },
+        { id: 7, nombre: "Taza Coleccionable", descripcion: "Taza edición especial", precio: 140.00, stock: 0, sucursal: "norte", categoria: "Accesorios", estado: "AGOTADO" },
+        { id: 8, nombre: "Playera Deportiva", descripcion: "Playera para educación física", precio: 200.00, stock: 3, sucursal: "sur", categoria: "Ropa", estado: "BAJO STOCK" }
+    ];
+    
+    // Actualizar estadísticas
+    updateAdminStats(mockInventoryData);
+    
+    // Actualizar tabla de productos
+    updateAdminProductsTable(mockInventoryData);
+}
+
+// Actualizar estadísticas del administrador
+function updateAdminStats(inventoryData) {
+    const statsGrid = document.getElementById('admin-stats');
+    
+    // Calcular estadísticas por sucursal
+    const statsBySucursal = {
+        norte: { total: 0, stock: 0, agotados: 0, bajosStock: 0 },
+        sur: { total: 0, stock: 0, agotados: 0, bajosStock: 0 },
+        este: { total: 0, stock: 0, agotados: 0, bajosStock: 0 }
+    };
+    
+    inventoryData.forEach(product => {
+        const sucursal = product.sucursal;
+        statsBySucursal[sucursal].total++;
+        statsBySucursal[sucursal].stock += product.stock;
+        if (product.stock === 0) statsBySucursal[sucursal].agotados++;
+        if (product.stock > 0 && product.stock <= 5) statsBySucursal[sucursal].bajosStock++;
+    });
+    
+    // Generar HTML de estadísticas
+    let statsHTML = '';
+    
+    for (const [sucursal, data] of Object.entries(statsBySucursal)) {
+        statsHTML += `
+            <div class="stat-card">
+                <h4>Sucursal ${sucursal.toUpperCase()}</h4>
+                <p><span>Total Productos:</span> <span>${data.total}</span></p>
+                <p><span>Stock Total:</span> <span>${data.stock}</span></p>
+                <p class="stat-warning"><span>Agotados:</span> <span>${data.agotados}</span></p>
+                <p class="stat-warning"><span>Bajo Stock:</span> <span>${data.bajosStock}</span></p>
+            </div>
+        `;
+    }
+    
+    statsGrid.innerHTML = statsHTML;
+}
+
+// Actualizar tabla de productos del administrador
+function updateAdminProductsTable(inventoryData) {
+    const tableBody = document.getElementById('admin-products-table');
+    
+    if (inventoryData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem;">No se encontraron productos</td></tr>';
+        return;
+    }
+    
+    let tableHTML = '';
+    
+    inventoryData.forEach(product => {
+        const estadoClass = product.estado === 'AGOTADO' ? 'stock-agotado' : 
+                           product.estado === 'BAJO STOCK' ? 'stock-bajo' : 'stock-disponible';
+        
+        tableHTML += `
+            <tr>
+                <td><strong>${product.nombre}</strong></td>
+                <td>${product.descripcion}</td>
+                <td>$${product.precio.toFixed(2)}</td>
+                <td>${product.stock}</td>
+                <td>${product.sucursal.toUpperCase()}</td>
+                <td>${product.categoria}</td>
+                <td><span class="${estadoClass}">${product.estado}</span></td>
+            </tr>
+        `;
+    });
+    
+    tableBody.innerHTML = tableHTML;
+}
+
+// Buscar productos en el panel de administración
+function searchAdminProducts() {
+    const searchTerm = document.getElementById('admin-search').value.toLowerCase();
+    const sucursalFilter = document.getElementById('admin-sucursal').value;
+    
+    // Simular búsqueda en base de datos
+    const mockInventoryData = [
+        { id: 1, nombre: "Taza Personalizada", descripcion: "Taza de cerámica con logo", precio: 120.00, stock: 45, sucursal: "norte", categoria: "Accesorios", estado: "DISPONIBLE" },
+        { id: 2, nombre: "Playera Estampada", descripcion: "Playera de algodón 100%", precio: 180.00, stock: 32, sucursal: "norte", categoria: "Ropa", estado: "DISPONIBLE" },
+        { id: 3, nombre: "Mochila Escolar", descripcion: "Mochila resistente", precio: 350.00, stock: 0, sucursal: "sur", categoria: "Accesorios", estado: "AGOTADO" },
+        { id: 4, nombre: "Lapicera Personalizada", descripcion: "Set de lapiceras", precio: 75.00, stock: 2, sucursal: "sur", categoria: "Papelería", estado: "BAJO STOCK" },
+        { id: 5, nombre: "Cuaderno Decorado", descripcion: "Cuaderno de 100 hojas", precio: 60.00, stock: 78, sucursal: "este", categoria: "Papelería", estado: "DISPONIBLE" },
+        { id: 6, nombre: "Gorra Escolar", descripcion: "Gorra ajustable", precio: 150.00, stock: 15, sucursal: "este", categoria: "Ropa", estado: "DISPONIBLE" },
+        { id: 7, nombre: "Taza Coleccionable", descripcion: "Taza edición especial", precio: 140.00, stock: 0, sucursal: "norte", categoria: "Accesorios", estado: "AGOTADO" },
+        { id: 8, nombre: "Playera Deportiva", descripcion: "Playera para educación física", precio: 200.00, stock: 3, sucursal: "sur", categoria: "Ropa", estado: "BAJO STOCK" }
+    ];
+    
+    // Filtrar datos
+    let filteredData = mockInventoryData;
+    
+    if (searchTerm) {
+        filteredData = filteredData.filter(product => 
+            product.nombre.toLowerCase().includes(searchTerm) || 
+            product.descripcion.toLowerCase().includes(searchTerm)
+        );
+    }
+    
+    if (sucursalFilter) {
+        filteredData = filteredData.filter(product => product.sucursal === sucursalFilter);
+    }
+    
+    // Actualizar tabla con datos filtrados
+    updateAdminProductsTable(filteredData);
+    
+    if (filteredData.length === 0) {
+        showNotification('🔍 No se encontraron productos con los filtros aplicados');
+    }
+}
+
+// En la función setupEventListeners, agregar:
+function setupEventListeners() {
+    // ... (tus event listeners existentes)
+    
+    // Configurar event listeners del administrador
+    setupAdminEventListeners();
+}
+
+// En la función closeModal, asegurarse de cerrar todos los modales:
+function closeModal() {
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.style.display = 'none';
+    });
+}

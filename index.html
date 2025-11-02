@@ -15,9 +15,16 @@
         <h1><i class="fas fa-graduation-cap"></i> Tienda Escolar</h1>
         <p>Universidad del Golfo de Mexico</p>
       </div>
-      <div class="cart-icon">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="cart-count">0</span>
+      <div class="header-actions">
+        <!-- Botón de Administrador -->
+        <button id="admin-btn" class="btn-admin">
+          <i class="fas fa-user-shield"></i> Admin
+        </button>
+        <!-- Icono del Carrito -->
+        <div class="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </div>
       </div>
     </div>
   </header>
@@ -152,6 +159,91 @@
           <button class="btn-secondary" id="new-order">
             <i class="fas fa-shopping-cart"></i> Nueva Orden
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE LOGIN PARA ADMINISTRADOR -->
+    <div id="admin-login-modal" class="modal">
+      <div class="modal-content admin-login">
+        <span class="close">&times;</span>
+        <div class="login-container">
+          <h2><i class="fas fa-user-shield"></i> Acceso Administrador</h2>
+          <form id="admin-login-form">
+            <div class="form-group">
+              <label for="admin-username">Usuario:</label>
+              <input type="text" id="admin-username" required>
+            </div>
+            <div class="form-group">
+              <label for="admin-password">Contraseña:</label>
+              <input type="password" id="admin-password" required>
+            </div>
+            <button type="submit" class="btn-admin-login">Iniciar Sesión</button>
+          </form>
+          <div id="admin-login-error" class="error-message"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DEL PANEL DE ADMINISTRADOR -->
+    <div id="admin-panel-modal" class="modal">
+      <div class="modal-content admin-panel">
+        <span class="close">&times;</span>
+        <div class="admin-header">
+          <h2><i class="fas fa-tachometer-alt"></i> Panel de Administración</h2>
+          <div class="admin-info">
+            <span id="admin-welcome">Bienvenido</span>
+            <button id="admin-logout" class="btn-logout">Cerrar Sesión</button>
+          </div>
+        </div>
+
+        <div class="admin-content">
+          <!-- Filtros de búsqueda -->
+          <div class="admin-filters">
+            <h3>🔍 Consultar Inventario</h3>
+            <div class="filter-controls">
+              <input type="text" id="admin-search" placeholder="Buscar producto...">
+              <select id="admin-sucursal">
+                <option value="">Todas las sucursales</option>
+                <option value="norte">Norte</option>
+                <option value="sur">Sur</option>
+                <option value="este">Este</option>
+              </select>
+              <button id="admin-search-btn" class="btn-primary">Buscar</button>
+              <button id="admin-refresh" class="btn-secondary">Actualizar</button>
+            </div>
+          </div>
+
+          <!-- Estadísticas -->
+          <div class="admin-stats">
+            <h3>📊 Estadísticas por Sucursal</h3>
+            <div class="stats-grid" id="admin-stats">
+              <!-- Las estadísticas se cargan dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Tabla de productos -->
+          <div class="admin-products">
+            <h3>📦 Inventario de Productos</h3>
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Sucursal</th>
+                    <th>Categoría</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-products-table">
+                  <!-- Los productos se cargan dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
