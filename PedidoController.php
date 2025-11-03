@@ -7,7 +7,6 @@ class PedidoController {
     private $productoModel;
 
     public function __construct() {
-        $this->pedidoModel = new PedidoModel();
         $this->productoModel = new ProductoModel();
     }
 
